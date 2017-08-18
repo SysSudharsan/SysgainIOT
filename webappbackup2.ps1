@@ -6,7 +6,7 @@ $psCred = New-Object System.Management.Automation.PSCredential($azureAccountName
 Login-AzureRmAccount -Credential $psCred
 Get-AzureRmSubscription
 $storageAccountRg = "sysgainwebapp"
-$storageAccountName = "komali100"
+$storageAccountName = "webstoresys100"
 $StorageAccount = @{
     ResourceGroupName = $storageAccountRg;
     Name = $storageAccountName;

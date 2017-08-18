@@ -31,12 +31,9 @@ $sasUrl1 = $url
     Start-Sleep -s 60
     
     $dbSetting1 = New-AzureRmWebAppDatabaseBackupSetting -Name syswebapp -DatabaseType SqlAzure -ConnectionString "Server=tcp:syswebapp.database.windows.net,1433;Initial Catalog=syswebapp;Persist Security Info=False;User ID=dbadmin;Password=Welcome12345;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=50;"
-    $dbBackup = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName -BackupName SudharBackup -StorageAccountUrl $sasUrl1 -Databases $dbSetting1
+    $dbBackup = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName -BackupName DBBackup -StorageAccountUrl $sasUrl1 -Databases $dbSetting1
  
 
  Edit-AzureRmWebAppBackupConfiguration -Name $appName -ResourceGroupName $storageAccountRg -StorageAccountUrl $sasUrl1 -FrequencyInterval 1 -FrequencyUnit Day -RetentionPeriodInDays 30 -Databases $dbSetting1 -KeepAtLeastOneBackup -StartTime (Get-Date).AddHours(1)
 
 
-
-
- 

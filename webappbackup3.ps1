@@ -27,7 +27,7 @@ New-AzureStorageContainer -Context $StorageContext -Name apibackup;
     $url1 = Write-Output $sasUrl1
 $sasUrl11 = $url1
     
-    $appName1 = "apiserverw4yjl"
+    $appName1 = "webiotapp"
     $backup1 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName1 -StorageAccountUrl $sasUrl11
 
   Start-Sleep -s 60
@@ -38,7 +38,7 @@ $sasUrl11 = $url1
     $url2 = Write-Output $sasUrl2
 $sasUrl12 = $url2
     
-    $appName2 = "webiotapp"
+    $appName2 = "apiserverw4yjl"
     $backup2 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName2 -StorageAccountUrl $sasUrl12
     
     Start-Sleep -s 60
@@ -47,9 +47,10 @@ $sasUrl12 = $url2
   $dbSetting2 = New-AzureRmWebAppDatabaseBackupSetting -Name DB2 -DatabaseType SqlAzure -ConnectionString "Server=tcp:trendsqlw4yjl.database.windows.net,1433;Initial Catalog=dsm;Persist Security Info=False;User ID=adminuser;Password=Password@1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"  
 
 
-$dbBackup2 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName2 -BackupName webappbup -StorageAccountUrl $sasUrl12 -Databases $dbSetting2
+$dbBackup2 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName2 -BackupName backup2 -StorageAccountUrl $sasUrl12 -Databases $dbSetting2
+$dbBackup1 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName1 -BackupName backup1 -StorageAccountUrl $sasUrl11 -Databases $dbSetting1
 
 Edit-AzureRmWebAppBackupConfiguration -Name $appName2 -ResourceGroupName $storageAccountRg -StorageAccountUrl $sasUrl12 -FrequencyInterval 1 -FrequencyUnit Day -RetentionPeriodInDays 30 -Databases $dbSetting2 -KeepAtLeastOneBackup -StartTime (Get-Date).AddHours(1)
 
 
- 
+Edit-AzureRmWebAppBackupConfiguration -Name $appName1 -ResourceGroupName $storageAccountRg -StorageAccountUrl $sasUrl11 -FrequencyInterval 1 -FrequencyUnit Day -RetentionPeriodInDays 30 -Databases $dbSetting1 -KeepAtLeastOneBackup -StartTime (Get-Date).AddHours(1)

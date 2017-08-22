@@ -61,7 +61,7 @@ $sasUrl12 = $url2
 
 
 # $dbBackup2 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName2 -BackupName backup2 -StorageAccountUrl $sasUrl12 -Databases $dbSetting2
-$dbBackup1 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName1 -BackupName backup1 -StorageAccountUrl $sasUrl11 -Databases $dbSetting1
+$dbBackup1 = New-AzureRmWebAppBackup -ResourceGroupName $storageAccountRg -Name $appName1 -BackupName web_db -StorageAccountUrl $sasUrl11 -Databases $dbSetting1
 
 Edit-AzureRmWebAppBackupConfiguration -Name $appName2 -ResourceGroupName $storageAccountRg -StorageAccountUrl $sasUrl12 -FrequencyInterval 1 -FrequencyUnit Day -RetentionPeriodInDays 30 -KeepAtLeastOneBackup -StartTime (Get-Date).AddHours(1)
 

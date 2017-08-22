@@ -1,8 +1,8 @@
 <#
 Long-term backup retention is currently in preview and available in the following regions: 
-Australia East, Australia Southeast, Brazil South, Central US, East Asia, East US, East US 2, 
-India Central, India South, Japan East, Japan West, North Central US, North Europe, South Central US, 
-Southeast Asia, West Europe, and West US.
+Australia East, Australia Southeast, Brazil South, 
+Central US, East Asia, East US, East US 2, India Central, India South, Japan East, 
+Japan West, North Central US, North Europe, South Central US, Southeast Asia, West Europe, and West US.
 #>
 
 workflow dbbackupscript{
@@ -12,7 +12,7 @@ param(
         $azureAccountName,
 
         [Parameter(Mandatory=$true)]
-        [string]
+        [securestring]
         $azurePassword,
 
         [Parameter(Mandatory=$true)]
@@ -29,11 +29,15 @@ param(
 
         [Parameter(Mandatory=$true)]
         [string]
-        $RetentionDurationType,
+        $RetentionDurationType, #It should be "Weeks" or "Months" or "Years".
+
+        [Parameter(Mandatory=$true)]
+        [integer]
+        $RetentionCount #It should be number of weeks/months/years and it should be integer. Max allowed years is 10.
 
         [Parameter(Mandatory=$true)]
         [string]
-        $RetentionCount
+        $databaseName
 
 ) 
 
@@ -46,6 +50,7 @@ InlineScript{
         $recoveryServiceVaultName = $Using:recoveryServiceVaultName
         $RetentionDurationType = $Using:RetentionDurationType
         $RetentionCount = $Using:RetentionCount
+        $databaseName = $Using:databaseName
 
  # $azureAccountName ="nvtuluva@sysgaincloud.onmicrosoft.com"
  # $azurePassword = ConvertTo-SecureString "indiatimes@225" -AsPlainText -Force
